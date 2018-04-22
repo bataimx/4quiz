@@ -9,9 +9,9 @@ function ArrRandom(arr, status){
 class Emotions extends Component {
   render() {
     let thumbList = [
-      ["/asset/emotions/question2.gif", "/asset/emotions/yay3.gif"],
-      ["/asset/emotions/yay1.gif", "/asset/emotions/yay2.gif", "/asset/emotions/yay4.gif"],
-      ["/asset/emotions/what.gif", "/asset/emotions/sad.gif"]
+      ["./asset/emotions/question2.gif", "./asset/emotions/yay3.gif"],
+      ["./asset/emotions/yay1.gif", "./asset/emotions/yay2.gif", "./asset/emotions/yay4.gif"],
+      ["./asset/emotions/what.gif", "./asset/emotions/sad.gif"]
     ];
 
     return (

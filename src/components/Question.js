@@ -16,7 +16,7 @@ class Question extends Component {
 
     if (t === activeQuestion.correct_answer){
       this.props.dispatch({'type': 'correctAnswer'});
-      talk('Congratulation! your choose is Corrected!', () => {
+      talk('Congratulation! it\'s Correct!', () => {
         window.jQuery('#questionlist').collapse('show');
       });
     }else{
