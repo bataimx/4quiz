@@ -1,0 +1,109 @@
+@keyframes flash {
+  from {background-color: #fff200;}
+  to {background-color: #fffa65;}
+}
+.flash {
+  color: #000;
+  border-color: #fffa65;
+  animation-name: flash;
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+}
+.table-cell{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.mainApp{
+  min-height: 100vh;
+  display: table;
+}
+.table{
+  display: table;
+}
+.paddingbottom-40{
+  padding-bottom: 40px;
+}
+.paddingtop-50{
+  padding-top: 50px;
+}
+.questionlist{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.questionlist:after{
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0.8;
+  z-index: 0;
+}
+.questionlist .question-list{
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+.container{
+  position: relative;
+  max-width: 560px;
+}
+.navbar-toggler{
+  background: #f1f1f1;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+}
+.title{
+  word-break: break-word;
+}
+.navbar-toggle .icon-bar{
+  background: #5f5f5f;
+  margin: auto;
+}
+.navbar-light .navbar-toggler{
+  outline: none;
+}
+.btn-circle{
+  border-radius: 50%;
+  overflow: hidden;
+}
+.btn + .btn{
+  margin-left: 30px;
+}
+.btn{
+  box-shadow: 0px 5px 15px -5px #000;
+  -webkit-box-shadow: 0px 5px 15px -5px #000;
+}
+img{
+  width: 100%;
+}
+.emotions{
+  width: 400px;
+}
+@media (min-width: 768px){
+  .navbar-toggle {
+    display: block;
+  }
+}
+@media (max-width: 460px){
+  .emotions{
+    width: 100%;
+  }
+}
