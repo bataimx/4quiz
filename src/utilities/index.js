@@ -26,6 +26,11 @@ export function ansiConvert(string){
   return t;
 }
 
+export function ArrRandom(arr, status){
+  let length = arr.length;
+  return arr[Math.floor(Math.random() * length)];
+}
+
 export function talk(statement, callback, speed = 1){
   if ( typeof window.responsiveVoice.speak === 'function' ) {
 
@@ -39,4 +44,60 @@ export function talk(statement, callback, speed = 1){
     });
 
   }
+}
+
+export function tsvJSON(tsv){
+
+  var lines=tsv.split("\n");
+
+  var result = [];
+
+  var headers=lines[0].split("\t");
+
+  for(var i=1;i<lines.length;i++){
+
+    var obj = {};
+    var currentline=lines[i].split("\t");
+
+    for(var j=0;j<headers.length;j++){
+      obj[headers[j].trim()] = currentline[j].trim();
+    }
+    result.push(obj);
+
+  }
+  return result; //JavaScript object
+  //return JSON.stringify(result); //JSON
+}
+
+export function fetchRedux(urlGDrive, callback) {
+  // let url = urlGDrive ? urlGDrive : 'http://localhost:3000/data.json';
+  let url = urlGDrive ? urlGDrive : 'https://opentdb.com/api.php?amount=10';
+  fetch(url)
+    .then(response => {
+      if ( response.status === 404 ) {
+        window.location.reload();
+      } else {
+        if (urlGDrive) 
+          return response.text();
+
+        return response.json();
+      }
+    })
+    .then(json => {
+      let dt;
+      if (urlGDrive) {
+        let t = tsvJSON(json);
+        dt = t;
+      }else{
+        if (json.results.length) {
+          dt = json.results;
+        }
+      }
+      if (typeof callback === 'function') {
+        callback(dt);
+      }
+    })
+    .catch(() => {
+      console.log( 'No internet connection found. App is running in offline mode.' );
+    });
 }

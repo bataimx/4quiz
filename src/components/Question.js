@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Title from './Title';
 import Answer from './Answer';
-import Emotions from './Emotions';
 import { ansiConvert, talk } from '../utilities';
 
 class Question extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   questionChecker(t){
     var {activeQuestion} = this.props;
@@ -36,7 +31,6 @@ class Question extends Component {
   }
 
   render() {
-    console.log(this.props);
     let {answerList,
         activeQuestion,
         selectedAnswer,
@@ -93,7 +87,6 @@ class Question extends Component {
           })
         }
         </div>
-        <Emotions/>
       </div>
     );
   }

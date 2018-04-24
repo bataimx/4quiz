@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchRedux } from '../utilities';
 
 class Navbar extends Component {
   render() {
@@ -17,10 +18,44 @@ class Navbar extends Component {
           <div className="question-list table">
             <div className="table-cell">
               {
+                this.props.questionNumber === -1 &&
+                <div className="align-items-center">
+                  <div className="form-group">
+                    <div className="row">
+                      <div className="col-9">
+                        <label className="sr-only" htmlFor="url">public Url</label>
+                        <input 
+                          type="text" 
+                          ref="GoogleSheetUrl"
+                          placeholder="public Url"
+                          id="url"
+                          className="form-control col-12" 
+                          defaultValue='https://docs.google.com/spreadsheets/d/e/2PACX-1vRTXLrh-gxr8a3cmsw4KhmRBhpnzQGsZRmZwHqEDbG4HawYiaBWK2yRp7MHo6GVMJTtI9MmKtPSskRW/pub?gid=0&single=true&output=tsv'
+                          />
+                      </div>
+                      <div className="col-3 pl-0">
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-block"
+                          onClick={() => {
+                            fetchRedux(this.refs.GoogleSheetUrl.value, (dt)=>{
+                              this.props.fetchData(dt);
+                              this.props.restart();
+                              window.jQuery('#questionlist').collapse('hide');
+                            });
+                          }}
+                          >Fetch</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              {
                 this.props.status !== 2 &&
+                this.props.questionNumber !== -1 &&
                 <button
                   onClick={() => {
-                    this.props.dispatch({'type': 'reset_reader'});
+                    this.props.reset_reader();
                     window.jQuery('#questionlist').collapse('hide');
                   }}
                   className="btn btn-info btn-lg">
@@ -31,8 +66,8 @@ class Navbar extends Component {
                 this.props.status === 2 &&
                 <button
                   onClick={() => {
-                    this.props.dispatch({'type': 'restart'});
-                    this.props.dispatch({'type': 'reset_reader'});
+                    this.props.restart();
+                    this.props.reset_reader();
                     window.jQuery('#questionlist').collapse('hide');
                   }}
                   className="btn btn-primary btn-lg">
@@ -43,8 +78,8 @@ class Navbar extends Component {
                 this.props.status === 1 &&
                 <button
                   onClick={() => {
-                    this.props.dispatch({'type': 'nextQuestion'});
-                    this.props.dispatch({'type': 'reset_reader'});
+                    this.props.nextQuestion();
+                    this.props.reset_reader();
                     window.jQuery('#questionlist').collapse('hide');
                   }}
                   className="btn btn-primary btn-lg">
@@ -62,8 +97,26 @@ class Navbar extends Component {
 // Map Redux state to component props
 function mapStateToProps(state) {
   return {
-    status: state.quizData.status
+    status: state.quizData.status,
+    questionNumber: state.quizData.question
   }
 }
 
-export default connect(mapStateToProps)(Navbar);
+// Map Redux actions to component props
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchData: (data) => dispatch({
+        'type': 'fetchData',
+        'data': data
+      }),
+    reset_reader: (data) => dispatch({'type': 'reset_reader'}),
+    nextQuestion: (data) => dispatch({'type': 'nextQuestion'}),
+    restart: (data) => dispatch({'type': 'restart'}),
+    updateUrl: (value) => dispatch({
+      'type': 'updateUrl',
+      'url': value
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

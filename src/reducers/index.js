@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
 
-const quizData = (state = {list: [], question: 0, status: 0, selectedAnswer: -1}, action) => {
+const quizData = (state = {list: [], question: -1, status: 0, selectedAnswer: -1}, action) => {
   switch (action.type) {
     case 'fetchData':
       return {
         ...state,
-        list: action.data
+        list: action.data,
+        question: -1,
+        status: 0,
+        selectedAnswer: -1
       }
     case 'nextQuestion':
       let nx = state.question >= state.list.length - 1 ? state.question : state.question + 1;

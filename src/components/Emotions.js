@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-function ArrRandom(arr, status){
-  let length = arr.length;
-  return arr[Math.floor(Math.random() * length)];
-}
+import { ArrRandom } from '../utilities';
 
 class Emotions extends Component {
   render() {

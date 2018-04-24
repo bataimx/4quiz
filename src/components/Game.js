@@ -2,44 +2,47 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Question from './Question';
 import Navbar from './Navbar';
-import { shuffle } from '../utilities';
-
-function fetchRedux() {
-  fetch('https://opentdb.com/api.php?amount=10')
-  // fetch('http://localhost:3000/data.json')
-    .then(response => {
-      if ( response.status === 404 ) {
-        window.location.reload();
-      } else {
-        return response.json();
-      }
-    })
-    .then(json => {
-      if (json.results.length) {
-        this.fetchData(json.results);
-      }
-    })
-    .catch(() => {
-      console.log( 'No internet connection found. App is running in offline mode.' );
-    });
-}
+import PreScreen from './PreScreen';
+import Emotions from './Emotions';
+import { shuffle, fetchRedux } from '../utilities';
 
 class Game extends Component {
 
   componentDidMount(){
-    this.props.fetchRedux();
+    fetchRedux(null, (dt)=>{
+      this.props.fetchData(dt);
+    });
   }
 
   render() {
+
     if (!this.props.list.length) {
       return (
-        <div>no found questions</div>
+        <div>NO Found Questions</div>
         )
     }
 
-    let {questionNumber, list} = this.props,
-        activeQuestion = list[questionNumber],
-        answerList = shuffle([activeQuestion.correct_answer, ...activeQuestion.incorrect_answers]);
+    let {questionNumber, list} = this.props;
+
+    if (questionNumber === -1) {
+      return (
+        <div className="container bg-light">
+          <div className="row">
+            <div className="col-sm-12 mainApp">
+              <div className="table-cell paddingtop-50">
+                <PreScreen/>
+                <Emotions/>
+              </div>
+            </div>
+            <Navbar/>
+          </div>
+        </div>
+      );
+    }
+
+    let activeQuestion = list[questionNumber],
+        incorrect_answers = typeof activeQuestion.incorrect_answers === 'string' ? JSON.parse(activeQuestion.incorrect_answers) : activeQuestion.incorrect_answers,
+        answerList = shuffle([activeQuestion.correct_answer, ...incorrect_answers]);
 
     return (
       <div className="container bg-light">
@@ -47,6 +50,7 @@ class Game extends Component {
           <div className="col-sm-12 mainApp">
             <div className="table-cell paddingtop-50">
               <Question activeQuestion={activeQuestion} answerList={answerList}/>
+              <Emotions/>
             </div>
           </div>
           <Navbar/>
@@ -70,8 +74,7 @@ function mapDispatchToProps(dispatch) {
     fetchData: (data) => dispatch({
         'type': 'fetchData',
         'data': data
-      }),
-    fetchRedux
+      })
   }
 }
 
