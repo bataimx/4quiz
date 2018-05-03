@@ -2,6 +2,9 @@
   from {background-color: #fff200;}
   to {background-color: #fffa65;}
 }
+body{
+  background-color: #efefef;
+}
 .flash {
   color: #000;
   border-color: #fffa65;
@@ -27,13 +30,13 @@
 .paddingtop-50{
   padding-top: 50px;
 }
-.questionlist{
+.navbar-wrapper{
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
-.questionlist:after{
+.navbar-wrapper:after{
   content: '';
   display: block;
   position: absolute;
@@ -45,7 +48,7 @@
   opacity: 0.8;
   z-index: 0;
 }
-.questionlist .question-list{
+.navbar-wrapper .navbar-content{
   min-height: 100vh;
   margin: 0;
   position: relative;
@@ -90,12 +93,16 @@
 .btn{
   box-shadow: 0px 5px 15px -5px #000;
   -webkit-box-shadow: 0px 5px 15px -5px #000;
+  white-space: normal;
 }
 img{
   width: 100%;
 }
 .emotions{
   width: 400px;
+}
+.left-15{
+  left: 15px;
 }
 @media (min-width: 768px){
   .navbar-toggle {
