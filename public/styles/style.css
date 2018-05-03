@@ -104,6 +104,10 @@ img{
 .left-15{
   left: 15px;
 }
+.nav_config:after{
+  background: #fdfdfd;
+  opacity: 0.95;
+}
 @media (min-width: 768px){
   .navbar-toggle {
     display: block;
