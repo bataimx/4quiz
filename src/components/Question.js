@@ -13,12 +13,12 @@ class Question extends Component {
       this.props.dispatch({'type': 'correctAnswer'});
       talk('Congratulation! it\'s Correct!', () => {
         window.jQuery('#questionlist').collapse('show');
-      });
+      }, this.props.talkspeed, this.props.gender);
     }else{
       this.props.dispatch({'type': 'wrongAnswer'});
       talk('unCorrect!', () => {
         window.jQuery('#questionlist').collapse('show');
-      });
+      }, this.props.talkspeed, this.props.gender);
     }
   }
 
@@ -27,7 +27,7 @@ class Question extends Component {
       this.props.dispatch({
         'type': 'next_reader'
       });
-    });
+    }, this.props.talkspeed, this.props.gender);
   }
 
   render() {
@@ -77,7 +77,7 @@ class Question extends Component {
                         });
                         talk(ansiConvert(`Your choice is: ${listName[idx]} ${item}`),() => {
                           setTimeout(()=>{this.questionChecker(item)}, 1000);
-                        });
+                        }, this.props.talkspeed, this.props.gender);
                       }
                     }}>
                     {`${listName[idx]} ${item}`}
@@ -98,7 +98,9 @@ function mapStateToProps(state) {
     status: state.quizData.status,
     selectedAnswer: state.quizData.selectedAnswer,
     reader: state.reader,
-    question: state.quizData.question
+    question: state.quizData.question,
+    talkspeed: state.config.talkspeed,
+    gender: state.config.gender
   }
 }
 

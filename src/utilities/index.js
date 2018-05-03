@@ -31,10 +31,10 @@ export function ArrRandom(arr, status){
   return arr[Math.floor(Math.random() * length)];
 }
 
-export function talk(statement, callback, speed = 1){
+export function talk(statement, callback, speed = 1, gender="UK English Male"){
   if ( typeof window.responsiveVoice.speak === 'function' ) {
 
-    window.responsiveVoice.speak(statement,"UK English Male", {
+    window.responsiveVoice.speak(statement,gender, {
       onend: function(){
         if ( typeof callback === 'function') {
           callback();
@@ -69,10 +69,10 @@ export function tsvJSON(tsv){
   //return JSON.stringify(result); //JSON
 }
 
-export function fetchRedux(urlGDrive, callback) {
+export function fetchRedux(urlGDrive) {
   // let url = urlGDrive ? urlGDrive : 'http://localhost:3000/data.json';
   let url = urlGDrive ? urlGDrive : 'https://opentdb.com/api.php?amount=10';
-  fetch(url)
+  return fetch(url)
     .then(response => {
       if ( response.status === 404 ) {
         window.location.reload();
@@ -93,9 +93,7 @@ export function fetchRedux(urlGDrive, callback) {
           dt = json.results;
         }
       }
-      if (typeof callback === 'function') {
-        callback(dt);
-      }
+      return dt;
     })
     .catch(() => {
       console.log( 'No internet connection found. App is running in offline mode.' );

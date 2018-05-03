@@ -58,7 +58,30 @@ const reader = (state = -1, action) => {
   }
 }
 
+const config = (state = {talkspeed: 1, gender: 'UK English Male', useGsheet: false}, action) => {
+  switch (action.type) {
+    case 'update_talkspeed':
+      return {
+        ...state,
+        talkspeed: action.speed
+      }
+    case 'update_gender':
+      return {
+        ...state,
+        gender: action.gender
+      }
+    case 'toggle_useGsheet':
+      return {
+        ...state,
+        useGsheet: !state.useGsheet
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   quizData,
-  reader
+  reader,
+  config
 })

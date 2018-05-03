@@ -2,25 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Question from './Question';
 import Navbar from './Navbar';
+import NavbarConfig from './Navbar_config';
 import PreScreen from './PreScreen';
 import Emotions from './Emotions';
-import { shuffle, fetchRedux } from '../utilities';
+import { shuffle } from '../utilities';
 
 class Game extends Component {
 
-  componentDidMount(){
-    fetchRedux(null, (dt)=>{
-      this.props.fetchData(dt);
-    });
-  }
-
   render() {
-
-    if (!this.props.list.length) {
-      return (
-        <div>NO Found Questions</div>
-        )
-    }
 
     let {questionNumber, list} = this.props;
 
@@ -35,6 +24,7 @@ class Game extends Component {
               </div>
             </div>
             <Navbar/>
+            <NavbarConfig/>
           </div>
         </div>
       );
@@ -54,6 +44,7 @@ class Game extends Component {
             </div>
           </div>
           <Navbar/>
+          <NavbarConfig/>
         </div>
       </div>
     );

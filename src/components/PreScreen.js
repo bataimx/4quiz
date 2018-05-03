@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchRedux } from '../utilities';
 
 class PreScreen extends Component {
   render() {
@@ -9,8 +10,15 @@ class PreScreen extends Component {
         className='prescreen mb-5'>
         <button
           onClick={() => {
-            this.props.dispatch({'type': 'restart'});
-            this.props.dispatch({'type': 'reset_reader'});
+            fetchRedux()
+              .then((response)=>{
+                this.props.dispatch({
+                  'type': 'fetchData',
+                  'data': response
+                })
+                this.props.dispatch({'type': 'restart'});
+                this.props.dispatch({'type': 'reset_reader'});
+              });
           }}
           className="btn btn-primary btn-lg">
           <i className="fa fa-play fa-2x"></i>

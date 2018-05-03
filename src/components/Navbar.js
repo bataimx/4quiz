@@ -5,7 +5,10 @@ import { fetchRedux } from '../utilities';
 class Navbar extends Component {
   render() {
     return (
-      <div className="navbar-light">
+      <div
+        className="navbar-light"
+        style={{"zIndex": "2"}}
+      >
         <button
           type="button"
           className="navbar-toggler collapsed"
@@ -14,8 +17,8 @@ class Navbar extends Component {
           aria-expanded="false">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div id="questionlist" className="collapse navbar-collapse questionlist">
-          <div className="question-list table">
+        <div id="questionlist" className="collapse navbar-collapse navbar-wrapper">
+          <div className="navbar-content table">
             <div className="table-cell">
               {
                 this.props.questionNumber === -1 &&
@@ -38,11 +41,13 @@ class Navbar extends Component {
                           type="submit"
                           className="btn btn-primary btn-block"
                           onClick={() => {
-                            fetchRedux(this.refs.GoogleSheetUrl.value, (dt)=>{
-                              this.props.fetchData(dt);
-                              this.props.restart();
-                              window.jQuery('#questionlist').collapse('hide');
-                            });
+                            fetchRedux(this.refs.GoogleSheetUrl.value)
+                              .then((resp) => {
+                                this.props.fetchData(resp);
+                                this.props.toggle_useGsheet();
+                                this.props.restart();
+                                window.jQuery('#questionlist').collapse('hide');
+                              });
                           }}
                           >Fetch</button>
                       </div>
@@ -66,8 +71,17 @@ class Navbar extends Component {
                 this.props.status === 2 &&
                 <button
                   onClick={() => {
-                    this.props.restart();
-                    this.props.reset_reader();
+                    if (this.props.useGsheet) {
+                      this.props.restart();
+                      this.props.reset_reader();
+                    } else{
+                      fetchRedux()
+                        .then((response)=>{
+                          this.props.fetchData(response);
+                          this.props.restart();
+                          this.props.reset_reader();
+                        });
+                    }
                     window.jQuery('#questionlist').collapse('hide');
                   }}
                   className="btn btn-primary btn-lg">
@@ -98,7 +112,8 @@ class Navbar extends Component {
 function mapStateToProps(state) {
   return {
     status: state.quizData.status,
-    questionNumber: state.quizData.question
+    questionNumber: state.quizData.question,
+    useGsheet: state.config.useGsheet
   }
 }
 
@@ -115,6 +130,9 @@ function mapDispatchToProps(dispatch) {
     updateUrl: (value) => dispatch({
       'type': 'updateUrl',
       'url': value
+    }),
+    toggle_useGsheet: ()=> dispatch({
+      'type': 'toggle_useGsheet'
     })
   }
 }
