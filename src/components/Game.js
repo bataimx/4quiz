@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Question from './Question';
 import Navbar from './Navbar';
-import NavbarConfig from './Navbar_config';
 import PreScreen from './PreScreen';
 import Emotions from './Emotions';
 import { shuffle, filterObject } from '../utilities';
@@ -31,7 +30,6 @@ class Game extends Component {
               </div>
             </div>
             <Navbar/>
-            <NavbarConfig/>
           </div>
         </div>
       );
@@ -57,7 +55,6 @@ class Game extends Component {
             </div>
           </div>
           <Navbar/>
-          <NavbarConfig/>
         </div>
       </div>
     );

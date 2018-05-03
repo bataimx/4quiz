@@ -101,8 +101,23 @@ img{
 .emotions{
   width: 400px;
 }
-.left-15{
-  left: 15px;
+.navbar-2,
+.navbar-3{
+  z-index: 0;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.navbar-main[aria-expanded="true"] ~ .navbar-2{
+  right: 75px;
+  z-index: 5;
+}
+.navbar-main[aria-expanded="true"] ~ .navbar-3{
+  right: 125px;
+  z-index: 5;
 }
 .nav_config:after{
   background: #fdfdfd;

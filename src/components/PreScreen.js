@@ -20,6 +20,7 @@ class PreScreen extends Component {
                 this.props.dispatch({'type': 'reset_reader'});
               });
           }}
+          title="Start"
           className="btn btn-primary btn-lg">
           <i className="fa fa-play fa-2x"></i>
         </button>

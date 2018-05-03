@@ -12,11 +12,13 @@ class Question extends Component {
     if (t === activeQuestion.correct_answer){
       this.props.dispatch({'type': 'correctAnswer'});
       talk('Congratulation! it\'s Correct!', () => {
+        window.jQuery('#nav_config').collapse('hide');
         window.jQuery('#questionlist').collapse('show');
       }, this.props.talkspeed, this.props.gender);
     }else{
       this.props.dispatch({'type': 'wrongAnswer'});
       talk('unCorrect!', () => {
+        window.jQuery('#nav_config').collapse('hide');
         window.jQuery('#questionlist').collapse('show');
       }, this.props.talkspeed, this.props.gender);
     }
