@@ -31,6 +31,16 @@ export function ArrRandom(arr, status){
   return arr[Math.floor(Math.random() * length)];
 }
 
+export function filterObject(arr, regexp){
+  let resultArr = [];
+  for (var property in arr) {
+    if (property.match(regexp)) {
+      resultArr.push(arr[property]);
+    }
+  }
+  return resultArr;
+}
+
 export function talk(statement, callback, speed = 1, gender="UK English Male"){
   if ( typeof window.responsiveVoice.speak === 'function' ) {
 

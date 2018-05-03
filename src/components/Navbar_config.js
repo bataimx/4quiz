@@ -64,9 +64,10 @@ class Nav_config extends Component {
                               name="form-field-gender"
                               value={this.props.gender}
                               onChange={(e)=>{
+                                let genderName = e ? e.value : null;
                                 this.props.dispatch({
                                   'type': 'update_gender',
-                                  'gender': e.value
+                                  'gender': genderName
                                 });
                               }}
                               style={{width: "200px"}}

@@ -5,13 +5,20 @@ import Navbar from './Navbar';
 import NavbarConfig from './Navbar_config';
 import PreScreen from './PreScreen';
 import Emotions from './Emotions';
-import { shuffle } from '../utilities';
+import { shuffle, filterObject } from '../utilities';
 
 class Game extends Component {
 
   render() {
 
-    let {questionNumber, list} = this.props;
+    let {
+          questionNumber,
+          list,
+          useGsheet
+        } = this.props,
+        activeQuestion = list[questionNumber],
+        incorrect_answers = [],
+        answerList = [];
 
     if (questionNumber === -1) {
       return (
@@ -30,9 +37,15 @@ class Game extends Component {
       );
     }
 
-    let activeQuestion = list[questionNumber],
-        incorrect_answers = typeof activeQuestion.incorrect_answers === 'string' ? JSON.parse(activeQuestion.incorrect_answers) : activeQuestion.incorrect_answers,
-        answerList = shuffle([activeQuestion.correct_answer, ...incorrect_answers]);
+    //googlesheet data
+    if (useGsheet) {
+      incorrect_answers = filterObject(activeQuestion, /incorrect_answers/i);
+    }else{
+      incorrect_answers = activeQuestion.incorrect_answers.length ? activeQuestion.incorrect_answers : [];
+    }
+
+    //shuffle and merge the incorrect_answers, correct_answer
+    answerList = shuffle([activeQuestion.correct_answer, ...incorrect_answers]);
 
     return (
       <div className="container bg-light">
@@ -55,7 +68,8 @@ class Game extends Component {
 function mapStateToProps(state) {
   return {
     list: state.quizData.list,
-    questionNumber: state.quizData.question
+    questionNumber: state.quizData.question,
+    useGsheet: state.config.useGsheet
   }
 }
 
