@@ -53,7 +53,7 @@ class Nav_config extends Component {
                           </div>
                         </div>
                         <div className="col-2 pl-0">
-                          <p>{ this.props.talkspeed * 100 }</p>
+                          <p>{ Math.floor(this.props.talkspeed * 100) }</p>
                         </div>
                       </div>
                       <div className="row">
