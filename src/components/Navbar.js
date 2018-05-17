@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NavbarConfig from './Navbar_config';
+import DocInput from './DocInput';
 import { fetchRedux, talk } from '../utilities';
 
 class Navbar extends Component {
@@ -59,36 +60,7 @@ class Navbar extends Component {
                 <div className="align-items-center">
                   <div className="row mx-0">
                     <div className="col-12">
-                      <div className="form-group text-left">
-                        <label htmlFor="url">Google Sheet Url</label>
-                        <div className="row">
-                          <div className="col-9">
-                            <input 
-                              type="text" 
-                              ref="GoogleSheetUrl"
-                              placeholder="public Url"
-                              id="url"
-                              className="form-control col-12" 
-                              defaultValue='https://docs.google.com/spreadsheets/d/e/2PACX-1vRTXLrh-gxr8a3cmsw4KhmRBhpnzQGsZRmZwHqEDbG4HawYiaBWK2yRp7MHo6GVMJTtI9MmKtPSskRW/pub?gid=0&single=true&output=tsv'
-                              />
-                          </div>
-                          <div className="col-3 pl-0">
-                            <button
-                              type="submit"
-                              className="btn btn-primary btn-block"
-                              onClick={() => {
-                                fetchRedux(this.refs.GoogleSheetUrl.value)
-                                  .then((resp) => {
-                                    this.props.fetchData(resp);
-                                    this.props.toggle_useGsheet();
-                                    this.props.restart();
-                                    window.jQuery('#questionlist, #nav_config').collapse('hide');
-                                  });
-                              }}
-                              >Fetch</button>
-                          </div>
-                        </div>
-                      </div>
+                      <DocInput/>
                     </div>
                   </div>
                 </div>
@@ -172,13 +144,6 @@ function mapDispatchToProps(dispatch) {
     reset_reader: (data) => dispatch({'type': 'reset_reader'}),
     nextQuestion: (data) => dispatch({'type': 'nextQuestion'}),
     restart: (data) => dispatch({'type': 'restart'}),
-    updateUrl: (value) => dispatch({
-      'type': 'updateUrl',
-      'url': value
-    }),
-    toggle_useGsheet: ()=> dispatch({
-      'type': 'toggle_useGsheet'
-    }),
     nextReader: ()=> dispatch({
       'type': 'next_reader'
     })

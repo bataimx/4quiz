@@ -4,6 +4,7 @@ import Slider from 'rc-slider';
 import Select from 'react-select';
 import 'rc-slider/assets/index.css';
 import 'react-select/dist/react-select.css';
+import DocInput from './DocInput';
 
 class Nav_config extends Component {
   render() {
@@ -71,6 +72,11 @@ class Nav_config extends Component {
                               { value: 'Vietnamese Male', label: 'Vietnamese Male' }
                             ]}
                           />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-10 text-center pt-4">
+                          <DocInput/>
                         </div>
                       </div>
                     </div>
